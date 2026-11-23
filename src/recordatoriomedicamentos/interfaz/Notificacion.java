@@ -1,5 +1,7 @@
 package recordatoriomedicamentos.interfaz;
 
+import java.time.LocalDateTime;
+
 public class Notificacion {
 
     private String mensaje;
@@ -8,37 +10,37 @@ public class Notificacion {
     private boolean notificacionesActivas;
 
     public Notificacion(String mensaje) {
+        this.mensaje = mensaje;
+        this.fechaHora = LocalDateTime.now().toString();
         this.estado = false;
-        this.notificacionesActivas = false;
-
-        if (mensaje != null && !mensaje.trim().isEmpty()) {
-            this.mensaje = mensaje;
-        }
+        this.notificacionesActivas = true;
     }
 
-    public boolean enviarNotificacion() {
-        if (mensaje != null && !mensaje.trim().isEmpty()
-                && notificacionesActivas) {
+    public void enviarNotificacion() {
+        if (notificacionesActivas) {
             estado = true;
-            return true;
+            System.out.println("Notificación enviada: " + mensaje);
+        } else {
+            System.out.println("Las notificaciones están desactivadas.");
         }
-        return false;
     }
 
     public void activarNotificaciones() {
         notificacionesActivas = true;
+        System.out.println("Notificaciones activadas.");
     }
 
     public void desactivarNotificaciones() {
         notificacionesActivas = false;
-        estado = false;
+        System.out.println("Notificaciones desactivadas.");
     }
 
-    public String mostrarAlerta() {
+    public void mostrarAlerta() {
         if (estado) {
-            return mensaje;
+            System.out.println("¡RECORDATORIO!");
+            System.out.println(mensaje);
+            System.out.println("Fecha y hora: " + fechaHora);
         }
-        return "No hay una notificación activa.";
     }
 
     public String getMensaje() {
@@ -55,17 +57,5 @@ public class Notificacion {
 
     public boolean isNotificacionesActivas() {
         return notificacionesActivas;
-    }
-
-    public void setMensaje(String mensaje) {
-        if (mensaje != null && !mensaje.trim().isEmpty()) {
-            this.mensaje = mensaje;
-        }
-    }
-
-    public void setFechaHora(String fechaHora) {
-        if (fechaHora != null && !fechaHora.trim().isEmpty()) {
-            this.fechaHora = fechaHora;
-        }
     }
 }

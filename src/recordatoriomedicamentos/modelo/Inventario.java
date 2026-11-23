@@ -1,8 +1,5 @@
 package recordatoriomedicamentos.modelo;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-
 public class Inventario {
 
     private String lote;
@@ -11,40 +8,25 @@ public class Inventario {
     private String fechaVencimiento;
     private String fechaActualizacion;
 
-    public Inventario(String lote, int cantidadDisponible, String fechaElaboracion, String fechaVencimiento) {
-        if (lote != null && !lote.trim().isEmpty()) {
-            this.lote = lote;
-        }
+    public Inventario(String lote, int cantidadDisponible,
+                      String fechaElaboracion, String fechaVencimiento) {
 
-        if (cantidadDisponible >= 0) {
-            this.cantidadDisponible = cantidadDisponible;
-        }
-
-        if (validarFecha(fechaElaboracion) && validarFecha(fechaVencimiento)
-                && !LocalDate.parse(fechaVencimiento).isBefore(LocalDate.parse(fechaElaboracion))) {
-            this.fechaElaboracion = fechaElaboracion;
-            this.fechaVencimiento = fechaVencimiento;
-        }
-
-        this.fechaActualizacion = LocalDate.now().toString();
+        this.lote = lote;
+        this.cantidadDisponible = cantidadDisponible;
+        this.fechaElaboracion = fechaElaboracion;
+        this.fechaVencimiento = fechaVencimiento;
     }
 
-    public boolean agregarCantidad(int cantidad) {
+    public void agregarCantidad(int cantidad) {
         if (cantidad > 0) {
             cantidadDisponible += cantidad;
-            actualizarFecha();
-            return true;
         }
-        return false;
     }
 
-    public boolean descontarCantidad(int cantidad) {
-        if (cantidad > 0 && verificarDisponibilidad(cantidad)) {
+    public void descontarCantidad(int cantidad) {
+        if (cantidad > 0 && cantidad <= cantidadDisponible) {
             cantidadDisponible -= cantidad;
-            actualizarFecha();
-            return true;
         }
-        return false;
     }
 
     public int consultarStock() {
@@ -56,25 +38,8 @@ public class Inventario {
     }
 
     public boolean verificarVencimiento() {
-        if (validarFecha(fechaVencimiento)) {
-            return !LocalDate.parse(fechaVencimiento)
-                    .isBefore(LocalDate.now());
-        }
-        return false;
-    }
-
-    private void actualizarFecha() {
-        fechaActualizacion = LocalDate.now().toString();
-    }
-
-    private boolean validarFecha(String fecha) {
-        if (fecha != null && !fecha.trim().isEmpty()) {
-            try {
-                LocalDate.parse(fecha);
-                return true;
-            } catch (DateTimeParseException e) {
-                return false;
-            }
+        if (fechaVencimiento != null && !fechaVencimiento.trim().isEmpty()) {
+            return fechaVencimiento.compareTo("2026-11-23") < 0;
         }
         return false;
     }
@@ -99,23 +64,8 @@ public class Inventario {
         return fechaActualizacion;
     }
 
-    public void setLote(String lote) {
-        if (lote != null && !lote.trim().isEmpty()) {
-            this.lote = lote;
-        }
+    public void setFechaActualizacion(String fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 
-    public void setFechaElaboracion(String fechaElaboracion) {
-        if (validarFecha(fechaElaboracion) && validarFecha(fechaVencimiento)
-                && !LocalDate.parse(fechaVencimiento).isBefore(LocalDate.parse(fechaElaboracion))) {
-            this.fechaElaboracion = fechaElaboracion;
-        }
-    }
-
-    public void setFechaVencimiento(String fechaVencimiento) {
-        if (validarFecha(fechaVencimiento) && validarFecha(fechaElaboracion)
-                && !LocalDate.parse(fechaVencimiento).isBefore(LocalDate.parse(fechaElaboracion))) {
-            this.fechaVencimiento = fechaVencimiento;
-        }
-    }
 }

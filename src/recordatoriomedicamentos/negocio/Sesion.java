@@ -7,19 +7,12 @@ public class Sesion {
     private boolean estado;
 
     public Sesion(String fechaInicio) {
-        if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-            this.fechaInicio = fechaInicio;
-        }
-        estado = false;
+        this.fechaInicio = fechaInicio;
+        this.estado = false;
     }
 
-    public boolean iniciarSesion() {
-        if (nombreUsuario != null && !nombreUsuario.trim().isEmpty()
-                && fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-            estado = true;
-            return true;
-        }
-        return false;
+    public void iniciarSesion() {
+        estado = true;
     }
 
     public void cerrarSesion() {
@@ -35,19 +28,11 @@ public class Sesion {
     }
 
     public void setNombreUsuario(String nombreUsuario) {
-        if (nombreUsuario != null && !nombreUsuario.trim().isEmpty()) {
-            this.nombreUsuario = nombreUsuario;
-        }
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getFechaInicio() {
         return fechaInicio;
-    }
-
-    public void setFechaInicio(String fechaInicio) {
-        if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-            this.fechaInicio = fechaInicio;
-        }
     }
 
     public boolean isEstado() {

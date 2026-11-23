@@ -11,52 +11,45 @@ public class Recordatorio {
     private ArrayList<Notificacion> notificaciones;
 
     public Recordatorio(String nombreTratamiento, String horaProgramada, String frecuencia) {
+        this.nombreTratamiento = nombreTratamiento;
+        this.horaProgramada = horaProgramada;
+        this.frecuencia = frecuencia;
+        this.estado = true;
         this.notificaciones = new ArrayList<>();
-        this.estado = false;
-
-        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()) {
-            this.nombreTratamiento = nombreTratamiento;
-        }
-
-        if (horaProgramada != null && !horaProgramada.trim().isEmpty()) {
-            this.horaProgramada = horaProgramada;
-        }
-
-        if (frecuencia != null && !frecuencia.trim().isEmpty()) {
-            this.frecuencia = frecuencia;
-        }
     }
 
-    public String generarRecordatorio() {
+    public void generarRecordatorio() {
         if (estado) {
-            return "Recordatorio de tratamiento: " + nombreTratamiento
-                    + "\nHora programada: " + horaProgramada
-                    + "\nFrecuencia: " + frecuencia;
+            System.out.println("Recordatorio generado para "
+                    + nombreTratamiento + " a las " + horaProgramada);
         }
-        return "El recordatorio se encuentra inactivo.";
     }
 
-    public boolean programarRecordatorio() {
-        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()
-                && horaProgramada != null && !horaProgramada.trim().isEmpty()
-                && frecuencia != null && !frecuencia.trim().isEmpty()) {
-
-            estado = true;
-            return true;
-        }
-        return false;
+    public void programarRecordatorio() {
+        estado = true;
+        System.out.println("Recordatorio programado correctamente.");
     }
 
     public void cancelarRecordatorio() {
         estado = false;
+        System.out.println("Recordatorio cancelado.");
     }
 
-    public boolean verificarEstado() {
-        return estado;
+    public void verificarEstado() {
+        System.out.println("Estado: " + (estado ? "Activo" : "Inactivo"));
     }
 
-    public ArrayList<Notificacion> consultarNotificaciones() {
-        return notificaciones;
+    public void consultarNotificaciones() {
+        for (Notificacion notificacion : notificaciones) {
+            System.out.println(notificacion.getMensaje());
+            System.out.println(notificacion.getFechaHora());
+        }
+    }
+
+    public void agregarNotificacion(Notificacion notificacion) {
+        if (notificacion != null) {
+            notificaciones.add(notificacion);
+        }
     }
 
     public String getNombreTratamiento() {
@@ -77,27 +70,5 @@ public class Recordatorio {
 
     public ArrayList<Notificacion> getNotificaciones() {
         return notificaciones;
-    }
-
-    public void setNombreTratamiento(String nombreTratamiento) {
-        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()) {
-            this.nombreTratamiento = nombreTratamiento;
-        }
-    }
-
-    public void setHoraProgramada(String horaProgramada) {
-        if (horaProgramada != null && !horaProgramada.trim().isEmpty()) {
-            this.horaProgramada = horaProgramada;
-        }
-    }
-
-    public void setFrecuencia(String frecuencia) {
-        if (frecuencia != null && !frecuencia.trim().isEmpty()) {
-            this.frecuencia = frecuencia;
-        }
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
     }
 }

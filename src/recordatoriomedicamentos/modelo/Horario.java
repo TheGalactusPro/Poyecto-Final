@@ -12,10 +12,28 @@ public class Horario {
     private String fin;
     private ArrayList<HoraProgramacion> programaciones;
 
-    public Horario(String horaAdministracion, String frecuencia, String diasSemana, String inicio, String fin) {
+    public Horario(String horaAdministracion, String frecuencia,
+                   String diasSemana, String inicio, String fin) {
 
+        this.horaAdministracion = horaAdministracion;
+        this.frecuencia = frecuencia;
+        this.diasSemana = diasSemana;
+        this.inicio = inicio;
+        this.fin = fin;
+        this.estado = true;
         this.programaciones = new ArrayList<>();
-        this.estado = false;
+    }
+
+    public void configurarHorario() {
+        if (horaAdministracion != null && !horaAdministracion.trim().isEmpty()
+                && frecuencia != null && !frecuencia.trim().isEmpty()) {
+            estado = true;
+            System.out.println("Horario configurado correctamente.");
+        }
+    }
+
+    public void modificarHorario(String horaAdministracion, String frecuencia,
+                                 String diasSemana) {
 
         if (horaAdministracion != null && !horaAdministracion.trim().isEmpty()) {
             this.horaAdministracion = horaAdministracion;
@@ -29,63 +47,47 @@ public class Horario {
             this.diasSemana = diasSemana;
         }
 
-        if (inicio != null && !inicio.trim().isEmpty()) {
-            this.inicio = inicio;
-        }
+        System.out.println("Horario modificado correctamente.");
+    }
 
-        if (fin != null && !fin.trim().isEmpty()) {
-            this.fin = fin;
+    public void consultarHorario() {
+        System.out.println("Hora: " + horaAdministracion);
+        System.out.println("Frecuencia: " + frecuencia);
+        System.out.println("Días: " + diasSemana);
+        System.out.println("Inicio: " + inicio);
+        System.out.println("Fin: " + fin);
+        System.out.println("Estado: " + (estado ? "Activo" : "Inactivo"));
+    }
+
+    public void consultarProximaToma() {
+        if (!programaciones.isEmpty()) {
+            HoraProgramacion proxima = programaciones.get(0);
+
+            System.out.println("Próxima toma:");
+            System.out.println("Fecha: " + proxima.getFechaProgramada());
+            System.out.println("Hora: " + proxima.getHoraProgramada());
+        } else {
+            System.out.println("No hay tomas programadas.");
         }
     }
 
-    public boolean configurarHorario() {
-        if (horaAdministracion != null && !horaAdministracion.trim().isEmpty()
-                && frecuencia != null && !frecuencia.trim().isEmpty()
-                && diasSemana != null && !diasSemana.trim().isEmpty()
-                && inicio != null && !inicio.trim().isEmpty()
-                && fin != null && !fin.trim().isEmpty()) {
-
-            estado = true;
-            return true;
+    public void consultarProgramaciones() {
+        for (HoraProgramacion programacion : programaciones) {
+            System.out.println("Fecha: " + programacion.getFechaProgramada());
+            System.out.println("Hora: " + programacion.getHoraProgramada());
+            System.out.println("Estado: " + programacion.getEstadoToma());
         }
-        return false;
-    }
-
-    public boolean modificarHorario(String horaAdministracion, String frecuencia, String diasSemana) {
-        if (horaAdministracion != null && !horaAdministracion.trim().isEmpty()
-                && frecuencia != null && !frecuencia.trim().isEmpty()
-                && diasSemana != null && !diasSemana.trim().isEmpty()) {
-
-            this.horaAdministracion = horaAdministracion;
-            this.frecuencia = frecuencia;
-            this.diasSemana = diasSemana;
-            return true;
-        }
-        return false;
-    }
-
-    public String consultarHorario() {
-        return "Hora de administración: " + horaAdministracion
-                + "\nFrecuencia: " + frecuencia
-                + "\nDías: " + diasSemana
-                + "\nInicio: " + inicio
-                + "\nFin: " + fin
-                + "\nEstado: " + (estado ? "Activo" : "Inactivo");
-    }
-
-    public String consultarProximaToma() {
-        if (estado && !programaciones.isEmpty()) {
-            return programaciones.get(0).consultarProximasTomas();
-        }
-        return "No hay próximas tomas programadas.";
-    }
-
-    public ArrayList<HoraProgramacion> consultarProgramaciones() {
-        return programaciones;
     }
 
     public void eliminarHorario() {
         estado = false;
+        System.out.println("Horario eliminado.");
+    }
+
+    public void agregarProgramacion(HoraProgramacion programacion) {
+        if (programacion != null) {
+            programaciones.add(programacion);
+        }
     }
 
     public String getHoraAdministracion() {
@@ -104,49 +106,7 @@ public class Horario {
         return estado;
     }
 
-    public String getInicio() {
-        return inicio;
-    }
-
-    public String getFin() {
-        return fin;
-    }
-
     public ArrayList<HoraProgramacion> getProgramaciones() {
         return programaciones;
-    }
-
-    public void setHoraAdministracion(String horaAdministracion) {
-        if (horaAdministracion != null && !horaAdministracion.trim().isEmpty()) {
-            this.horaAdministracion = horaAdministracion;
-        }
-    }
-
-    public void setFrecuencia(String frecuencia) {
-        if (frecuencia != null && !frecuencia.trim().isEmpty()) {
-            this.frecuencia = frecuencia;
-        }
-    }
-
-    public void setDiasSemana(String diasSemana) {
-        if (diasSemana != null && !diasSemana.trim().isEmpty()) {
-            this.diasSemana = diasSemana;
-        }
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-
-    public void setInicio(String inicio) {
-        if (inicio != null && !inicio.trim().isEmpty()) {
-            this.inicio = inicio;
-        }
-    }
-
-    public void setFin(String fin) {
-        if (fin != null && !fin.trim().isEmpty()) {
-            this.fin = fin;
-        }
     }
 }

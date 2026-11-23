@@ -1,5 +1,7 @@
 package recordatoriomedicamentos.negocio;
 
+import recordatoriomedicamentos.modelo.Usuario;
+
 public class RecuperacionContrasena {
 
     private String idRecuperacion;
@@ -8,32 +10,31 @@ public class RecuperacionContrasena {
     private boolean solicitud;
 
     public RecuperacionContrasena(String idRecuperacion, String fechaSolicitud) {
-        if (idRecuperacion != null && !idRecuperacion.trim().isEmpty()) {
-            this.idRecuperacion = idRecuperacion;
-        }
-        solicitud = false;
+        this.idRecuperacion = idRecuperacion;
+        this.solicitud = false;
     }
 
-    public boolean solicitarRecuperacion() {
-        if (nombreUsuario != null && !nombreUsuario.trim().isEmpty()) {
-            solicitud = true;
-            return true;
-        }
-        return false;
+    public void solicitarRecuperacion() {
+        solicitud = true;
     }
 
     public boolean verificarSolicitud() {
         return solicitud;
     }
 
-    public boolean actualizarContrasena() {
-        if (solicitud && nuevaContrasena != null
-                && !nuevaContrasena.trim().isEmpty()) {
-            solicitud = false;
-            return true;
-        }
+    public void actualizarContrasena(Usuario usuario) {
+        if (usuario != null
+                && nombreUsuario != null
+                && !nombreUsuario.trim().isEmpty()
+                && nuevaContrasena != null
+                && !nuevaContrasena.trim().isEmpty()
+                && solicitud) {
 
-        return false;
+            usuario.setNombreUsuario(nombreUsuario);
+            usuario.cambiarContrasena(nuevaContrasena);
+
+            solicitud = false;
+        }
     }
 
     public String getIdRecuperacion() {
@@ -45,9 +46,7 @@ public class RecuperacionContrasena {
     }
 
     public void setNombreUsuario(String nombreUsuario) {
-        if (nombreUsuario != null && !nombreUsuario.trim().isEmpty()) {
-            this.nombreUsuario = nombreUsuario;
-        }
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNuevaContrasena() {
@@ -55,12 +54,6 @@ public class RecuperacionContrasena {
     }
 
     public void setNuevaContrasena(String nuevaContrasena) {
-        if (nuevaContrasena != null && !nuevaContrasena.trim().isEmpty()) {
-            this.nuevaContrasena = nuevaContrasena;
-        }
-    }
-
-    public boolean isSolicitud() {
-        return solicitud;
+        this.nuevaContrasena = nuevaContrasena;
     }
 }

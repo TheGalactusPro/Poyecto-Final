@@ -1,6 +1,7 @@
 package recordatoriomedicamentos.modelo;
 
 import recordatoriomedicamentos.interfaz.Recordatorio;
+
 import java.util.ArrayList;
 
 public class HoraProgramacion {
@@ -11,9 +12,18 @@ public class HoraProgramacion {
     private ArrayList<Recordatorio> recordatorios;
 
     public HoraProgramacion(String fechaProgramada, String horaProgramada) {
-        this.recordatorios = new ArrayList<>();
+        this.fechaProgramada = fechaProgramada;
+        this.horaProgramada = horaProgramada;
         this.estadoToma = "Pendiente";
+        this.recordatorios = new ArrayList<>();
+    }
 
+    public void programarToma() {
+        System.out.println("Toma programada para el "
+                + fechaProgramada + " a las " + horaProgramada);
+    }
+
+    public void actualizarProgramacion(String fechaProgramada, String horaProgramada) {
         if (fechaProgramada != null && !fechaProgramada.trim().isEmpty()) {
             this.fechaProgramada = fechaProgramada;
         }
@@ -21,39 +31,25 @@ public class HoraProgramacion {
         if (horaProgramada != null && !horaProgramada.trim().isEmpty()) {
             this.horaProgramada = horaProgramada;
         }
+
+        System.out.println("Programación actualizada.");
     }
 
-    public boolean programarToma() {
-        if (fechaProgramada != null && !fechaProgramada.trim().isEmpty()
-                && horaProgramada != null && !horaProgramada.trim().isEmpty()) {
-            estadoToma = "Pendiente";
-            return true;
+    public void consultarProximasTomas() {
+        System.out.println("Fecha: " + fechaProgramada);
+        System.out.println("Hora: " + horaProgramada);
+        System.out.println("Estado: " + estadoToma);
+    }
+
+    public void generarCalendario() {
+        System.out.println("Calendario de toma:");
+        System.out.println(fechaProgramada + " - " + horaProgramada);
+    }
+
+    public void agregarRecordatorio(Recordatorio recordatorio) {
+        if (recordatorio != null) {
+            recordatorios.add(recordatorio);
         }
-        return false;
-    }
-
-    public boolean actualizarProgramacion(String fechaProgramada, String horaProgramada) {
-        if (fechaProgramada != null && !fechaProgramada.trim().isEmpty()
-                && horaProgramada != null && !horaProgramada.trim().isEmpty()) {
-
-            this.fechaProgramada = fechaProgramada;
-            this.horaProgramada = horaProgramada;
-            return true;
-        }
-        return false;
-    }
-
-    public String consultarProximasTomas() {
-        return "Fecha programada: " + fechaProgramada
-                + "\nHora programada: " + horaProgramada
-                + "\nEstado de la toma: " + estadoToma;
-    }
-
-    public String generarCalendario() {
-        return "Calendario de toma\n"
-                + "Fecha: " + fechaProgramada
-                + "\nHora: " + horaProgramada
-                + "\nEstado: " + estadoToma;
     }
 
     public String getFechaProgramada() {
@@ -68,25 +64,11 @@ public class HoraProgramacion {
         return estadoToma;
     }
 
+    public void setEstadoToma(String estadoToma) {
+        this.estadoToma = estadoToma;
+    }
+
     public ArrayList<Recordatorio> getRecordatorios() {
         return recordatorios;
-    }
-
-    public void setFechaProgramada(String fechaProgramada) {
-        if (fechaProgramada != null && !fechaProgramada.trim().isEmpty()) {
-            this.fechaProgramada = fechaProgramada;
-        }
-    }
-
-    public void setHoraProgramada(String horaProgramada) {
-        if (horaProgramada != null && !horaProgramada.trim().isEmpty()) {
-            this.horaProgramada = horaProgramada;
-        }
-    }
-
-    public void setEstadoToma(String estadoToma) {
-        if (estadoToma != null && !estadoToma.trim().isEmpty()) {
-            this.estadoToma = estadoToma;
-        }
     }
 }

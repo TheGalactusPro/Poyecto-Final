@@ -9,8 +9,19 @@ public class Tratamiento {
     private ArrayList<Medicamento> medicamentos;
 
     public Tratamiento(String nombreTratamiento, String fechaInicio, String fechaFin) {
+        this.nombreTratamiento = nombreTratamiento;
+        this.fechaInicio = fechaInicio;
         this.medicamentos = new ArrayList<>();
+    }
 
+    public void registrarTratamiento() {
+        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()
+                && fechaInicio != null && !fechaInicio.trim().isEmpty()) {
+            System.out.println("Tratamiento registrado correctamente.");
+        }
+    }
+
+    public void modificarTratamiento(String nombreTratamiento, String fechaInicio, String fechaFin) {
         if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()) {
             this.nombreTratamiento = nombreTratamiento;
         }
@@ -18,35 +29,29 @@ public class Tratamiento {
         if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
             this.fechaInicio = fechaInicio;
         }
-    }
 
-    public boolean registrarTratamiento() {
-        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()
-                && fechaInicio != null && !fechaInicio.trim().isEmpty()
-                && !medicamentos.isEmpty()) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean modificarTratamiento(String nombreTratamiento, String fechaInicio, String fechaFin) {
-        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()
-                && fechaInicio != null && !fechaInicio.trim().isEmpty()
-                && fechaFin != null && !fechaFin.trim().isEmpty()) {
-            this.nombreTratamiento = nombreTratamiento;
-            this.fechaInicio = fechaInicio;
-            return true;
-        }
-        return false;
+        System.out.println("Tratamiento modificado correctamente.");
     }
 
     public void finalizarTratamiento() {
-        medicamentos.clear();
+        System.out.println("Tratamiento finalizado: " + nombreTratamiento);
     }
 
-    public String consultarTratamiento() {
-        return "Tratamiento: " +nombreTratamiento+ "\nFecha de inicio: " +fechaInicio+
-                "\nMedicamentos asociados: " + medicamentos.size();
+    public void consultarTratamiento() {
+        System.out.println("Nombre: " + nombreTratamiento);
+        System.out.println("Fecha de inicio: " + fechaInicio);
+
+        System.out.println("Medicamentos:");
+
+        for (Medicamento medicamento : medicamentos) {
+            System.out.println("- " + medicamento.getNombreMedicamento());
+        }
+    }
+
+    public void agregarMedicamento(Medicamento medicamento) {
+        if (medicamento != null) {
+            medicamentos.add(medicamento);
+        }
     }
 
     public String getNombreTratamiento() {
@@ -59,17 +64,5 @@ public class Tratamiento {
 
     public ArrayList<Medicamento> getMedicamentos() {
         return medicamentos;
-    }
-
-    public void setNombreTratamiento(String nombreTratamiento) {
-        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()) {
-            this.nombreTratamiento = nombreTratamiento;
-        }
-    }
-
-    public void setFechaInicio(String fechaInicio) {
-        if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-            this.fechaInicio = fechaInicio;
-        }
     }
 }
