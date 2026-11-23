@@ -11,23 +11,33 @@ public class RecuperacionContrasena {
         if (idRecuperacion != null && !idRecuperacion.trim().isEmpty()) {
             this.idRecuperacion = idRecuperacion;
         }
-        this.solicitud = false;
+        solicitud = false;
     }
 
-    public void solicitarRecuperacion() {
-        solicitud = true;
+    public boolean solicitarRecuperacion() {
+        if (nombreUsuario != null && !nombreUsuario.trim().isEmpty()) {
+            solicitud = true;
+            return true;
+        }
+        return false;
     }
 
     public boolean verificarSolicitud() {
         return solicitud;
     }
 
-    public void actualizarContrasena() {
-
-        if (nuevaContrasena != null && !nuevaContrasena.trim().isEmpty()) {
+    // Actualizar contraseña
+    public boolean actualizarContrasena() {
+        if (solicitud && nuevaContrasena != null
+                && !nuevaContrasena.trim().isEmpty()) {
             solicitud = false;
+            return true;
         }
+
+        return false;
     }
+
+    // Getters y setters
 
     public String getIdRecuperacion() {
         return idRecuperacion;

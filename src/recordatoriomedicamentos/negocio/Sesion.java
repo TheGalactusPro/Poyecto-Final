@@ -7,12 +7,19 @@ public class Sesion {
     private boolean estado;
 
     public Sesion(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
-        this.estado = false;
+        if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
+            this.fechaInicio = fechaInicio;
+        }
+        estado = false;
     }
 
-    public void iniciarSesion() {
-        estado = true;
+    public boolean iniciarSesion() {
+        if (nombreUsuario != null && !nombreUsuario.trim().isEmpty()
+                && fechaInicio != null && !fechaInicio.trim().isEmpty()) {
+            estado = true;
+            return true;
+        }
+        return false;
     }
 
     public void cerrarSesion() {
