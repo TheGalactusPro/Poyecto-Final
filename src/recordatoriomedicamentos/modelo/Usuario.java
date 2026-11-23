@@ -24,6 +24,7 @@ public class Usuario {
         sesiones = new ArrayList<>();
         recuperaciones = new ArrayList<>();
         reportes = new ArrayList<>();
+        historial = null;
     }
 
     public boolean registrarUsuario() {
@@ -32,23 +33,19 @@ public class Usuario {
                 && contrasena != null && !contrasena.trim().isEmpty();
     }
 
-    // Modificar datos
-    public void modificarDatos() {
-        // Los datos se actualizan mediante los setters.
+    public boolean modificarDatos() {
+        return nombreCompleto != null && !nombreCompleto.trim().isEmpty()
+                && nombreUsuario != null && !nombreUsuario.trim().isEmpty();
     }
 
-    // Validar credenciales
     public boolean validarCredenciales() {
         return nombreUsuario != null && !nombreUsuario.trim().isEmpty()
                 && contrasena != null && !contrasena.trim().isEmpty();
     }
 
-    // Cambiar contraseña
-    public void cambiarContrasena() {
-        // La contraseña se actualiza mediante el setter.
+    public boolean cambiarContrasena() {
+        return contrasena != null && !contrasena.trim().isEmpty();
     }
-
-    // Getters y setters
 
     public String getNombreCompleto() {
         return nombreCompleto;
