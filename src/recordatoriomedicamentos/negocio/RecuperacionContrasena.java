@@ -26,7 +26,6 @@ public class RecuperacionContrasena {
         return solicitud;
     }
 
-    // Actualizar contraseña
     public boolean actualizarContrasena() {
         if (solicitud && nuevaContrasena != null
                 && !nuevaContrasena.trim().isEmpty()) {
@@ -36,8 +35,6 @@ public class RecuperacionContrasena {
 
         return false;
     }
-
-    // Getters y setters
 
     public String getIdRecuperacion() {
         return idRecuperacion;
