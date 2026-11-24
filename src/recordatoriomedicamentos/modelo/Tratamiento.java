@@ -5,42 +5,38 @@ import java.util.ArrayList;
 public class Tratamiento {
 
     private String nombreTratamiento;
-    private String fechaInicio;
     private ArrayList<Medicamento> medicamentos;
 
-    public Tratamiento(String nombreTratamiento, String fechaInicio, String fechaFin) {
+    public Tratamiento(String nombreTratamiento) {
         this.nombreTratamiento = nombreTratamiento;
-        this.fechaInicio = fechaInicio;
         this.medicamentos = new ArrayList<>();
     }
 
     public void registrarTratamiento() {
-        System.out.println("Tratamiento registrado.");
+        System.out.println("Tratamiento registrado correctamente.");
     }
 
-    public void modificarTratamiento(String nombreTratamiento, String fechaInicio, String fechaFin) {
+    public void modificarTratamiento(String nombreTratamiento) {
         this.nombreTratamiento = nombreTratamiento;
-        this.fechaInicio = fechaInicio;
     }
 
     public void finalizarTratamiento() {
-        System.out.println("Tratamiento finalizado.");
+        System.out.println("Tratamiento finalizado correctamente.");
     }
 
     public void consultarTratamiento() {
-        System.out.println("Nombre: " + nombreTratamiento);
-        System.out.println("Fecha de inicio: " + fechaInicio);
+        System.out.println("Nombre del tratamiento: " + nombreTratamiento);
     }
 
     public String getNombreTratamiento() {
         return nombreTratamiento;
     }
 
-    public ArrayList<Medicamento> getMedicamentos() {
-        return medicamentos;
+    public void setNombreTratamiento(String nombreTratamiento) {
+        this.nombreTratamiento = nombreTratamiento;
     }
 
-    public String getFechaInicio() {
-        return fechaInicio;
+    public ArrayList<Medicamento> getMedicamentos() {
+        return medicamentos;
     }
 }

@@ -395,7 +395,7 @@ public class Main {
         System.out.println("\nREGISTRAR TRATAMIENTO");
         System.out.print("Nombre del tratamiento: ");
         String nombre = entrada.nextLine();
-        Tratamiento tratamiento = new Tratamiento(nombre, "", "");
+        Tratamiento tratamiento = new Tratamiento(nombre);
         if (usuario.getMedicamentos().isEmpty()) {
             System.out.println("No hay medicamentos registrados en este perfil.");
             return;
@@ -481,7 +481,7 @@ public class Main {
         Tratamiento tratamiento = usuario.getTratamientos().get(opcion - 1);
         System.out.print("Ingrese el nuevo nombre del tratamiento: ");
         String nuevoNombre = entrada.nextLine();
-        tratamiento.modificarTratamiento(nuevoNombre, "", "");
+        tratamiento.modificarTratamiento(nuevoNombre);
         System.out.println("Tratamiento modificado correctamente.");
     }
 
