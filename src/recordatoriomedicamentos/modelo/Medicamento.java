@@ -3,7 +3,6 @@ package recordatoriomedicamentos.modelo;
 import java.util.ArrayList;
 
 public class Medicamento {
-
     private String nombreMedicamento;
     private String unidadMedida;
     private int cantidad;

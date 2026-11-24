@@ -7,7 +7,6 @@ import recordatoriomedicamentos.negocio.Reporte;
 import java.util.ArrayList;
 
 public class Usuario {
-
     private String nombreCompleto;
     private String nombreUsuario;
     private String contrasena;
@@ -24,13 +23,11 @@ public class Usuario {
         this.nombreCompleto = nombreCompleto;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
-
         medicamentos = new ArrayList<>();
         tratamientos = new ArrayList<>();
         sesiones = new ArrayList<>();
         recuperaciones = new ArrayList<>();
         reportes = new ArrayList<>();
-
         historial = new HistorialAdministracion();
     }
 

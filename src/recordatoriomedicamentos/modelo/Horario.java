@@ -3,7 +3,6 @@ package recordatoriomedicamentos.modelo;
 import java.util.ArrayList;
 
 public class Horario {
-
     private String horaAdministracion;
     private String frecuencia;
     private String diasSemana;
@@ -12,9 +11,7 @@ public class Horario {
     private String fin;
     private ArrayList<HoraProgramacion> programaciones;
 
-    public Horario(String horaAdministracion, String frecuencia,
-                   String diasSemana, String inicio, String fin) {
-
+    public Horario(String horaAdministracion, String frecuencia, String diasSemana, String inicio, String fin) {
         this.horaAdministracion = horaAdministracion;
         this.frecuencia = frecuencia;
         this.diasSemana = diasSemana;
@@ -25,28 +22,22 @@ public class Horario {
     }
 
     public void configurarHorario() {
-        if (horaAdministracion != null && !horaAdministracion.trim().isEmpty()
-                && frecuencia != null && !frecuencia.trim().isEmpty()) {
+        if (horaAdministracion != null && !horaAdministracion.trim().isEmpty() && frecuencia != null && !frecuencia.trim().isEmpty()) {
             estado = true;
             System.out.println("Horario configurado correctamente.");
         }
     }
 
-    public void modificarHorario(String horaAdministracion, String frecuencia,
-                                 String diasSemana) {
-
+    public void modificarHorario(String horaAdministracion, String frecuencia, String diasSemana) {
         if (horaAdministracion != null && !horaAdministracion.trim().isEmpty()) {
             this.horaAdministracion = horaAdministracion;
         }
-
         if (frecuencia != null && !frecuencia.trim().isEmpty()) {
             this.frecuencia = frecuencia;
         }
-
         if (diasSemana != null && !diasSemana.trim().isEmpty()) {
             this.diasSemana = diasSemana;
         }
-
         System.out.println("Horario modificado correctamente.");
     }
 
@@ -62,7 +53,6 @@ public class Horario {
     public void consultarProximaToma() {
         if (!programaciones.isEmpty()) {
             HoraProgramacion proxima = programaciones.get(0);
-
             System.out.println("Próxima toma:");
             System.out.println("Fecha: " + proxima.getFechaProgramada());
             System.out.println("Hora: " + proxima.getHoraProgramada());

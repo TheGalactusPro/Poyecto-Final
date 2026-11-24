@@ -1,19 +1,15 @@
 package recordatoriomedicamentos.modelo;
 
 public class Sesion {
-
-    // Atributos
     private String nombreUsuario;
     private String fechaInicio;
     private boolean estado;
 
-    // Constructor
     public Sesion(String fechaInicio) {
         this.fechaInicio = fechaInicio;
         this.estado = false;
     }
 
-    // Métodos
     public void iniciarSesion() {
         estado = true;
         System.out.println("Sesión iniciada correctamente.");
@@ -28,7 +24,6 @@ public class Sesion {
         return estado;
     }
 
-    // Getters y setters
     public String getNombreUsuario() {
         return nombreUsuario;
     }

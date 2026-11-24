@@ -3,7 +3,6 @@ package recordatoriomedicamentos.negocio;
 import recordatoriomedicamentos.modelo.Usuario;
 
 public class RecuperacionContrasena {
-
     private String idRecuperacion;
     private String nombreUsuario;
     private String nuevaContrasena;
@@ -29,10 +28,8 @@ public class RecuperacionContrasena {
                 && nuevaContrasena != null
                 && !nuevaContrasena.trim().isEmpty()
                 && solicitud) {
-
             usuario.setNombreUsuario(nombreUsuario);
             usuario.cambiarContrasena(nuevaContrasena);
-
             solicitud = false;
         }
     }

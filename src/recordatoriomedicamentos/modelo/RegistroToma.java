@@ -1,7 +1,6 @@
 package recordatoriomedicamentos.modelo;
 
 public class RegistroToma {
-
     private Medicamento medicamento;
     private String estadoToma;
     private String fechaHoraReal;

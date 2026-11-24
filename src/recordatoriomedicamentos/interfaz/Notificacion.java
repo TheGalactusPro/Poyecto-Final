@@ -3,12 +3,10 @@ package recordatoriomedicamentos.interfaz;
 import java.time.LocalDateTime;
 
 public class Notificacion {
-
     private String mensaje;
     private String fechaHora;
     private boolean estado;
     private boolean notificacionesActivas;
-
     public Notificacion(String mensaje) {
         this.mensaje = mensaje;
         this.fechaHora = LocalDateTime.now().toString();

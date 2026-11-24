@@ -3,7 +3,6 @@ package recordatoriomedicamentos.modelo;
 import java.util.ArrayList;
 
 public class Tratamiento {
-
     private String nombreTratamiento;
     private ArrayList<Medicamento> medicamentos;
 

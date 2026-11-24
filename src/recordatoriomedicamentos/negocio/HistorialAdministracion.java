@@ -1,11 +1,9 @@
 package recordatoriomedicamentos.negocio;
 
 import recordatoriomedicamentos.modelo.RegistroToma;
-
 import java.util.ArrayList;
 
 public class HistorialAdministracion {
-
     private ArrayList<RegistroToma> registrosTomas;
     private String fechaDesde;
     private String fechaHasta;
@@ -33,15 +31,12 @@ public class HistorialAdministracion {
     }
 
     public void filtrarPorMedicamento(String nombreMedicamento) {
-        System.out.println("Para filtrar por medicamento se necesita "
-                + "conocer el medicamento asociado a cada registro.");
+        System.out.println("Para filtrar por medicamento se necesita " + "conocer el medicamento asociado a cada registro.");
     }
 
     public void filtrarPorEstado(String estado) {
         for (RegistroToma registro : registrosTomas) {
-            if (registro.getEstadoToma() != null
-                    && registro.getEstadoToma().equalsIgnoreCase(estado)) {
-
+            if (registro.getEstadoToma() != null && registro.getEstadoToma().equalsIgnoreCase(estado)) {
                 registro.consultarRegistro();
             }
         }
@@ -50,11 +45,9 @@ public class HistorialAdministracion {
     public void filtrarPorFecha(String fechaDesde, String fechaHasta) {
         this.fechaDesde = fechaDesde;
         this.fechaHasta = fechaHasta;
-
         for (RegistroToma registro : registrosTomas) {
             if (registro.getFechaHoraReal() != null) {
                 String fecha = registro.getFechaHoraReal().substring(0, 10);
-
                 if (fecha.compareTo(fechaDesde) >= 0
                         && fecha.compareTo(fechaHasta) <= 0) {
 

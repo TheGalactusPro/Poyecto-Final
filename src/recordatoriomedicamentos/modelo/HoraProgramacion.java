@@ -5,7 +5,6 @@ import recordatoriomedicamentos.interfaz.Recordatorio;
 import java.util.ArrayList;
 
 public class HoraProgramacion {
-
     private String fechaProgramada;
     private String horaProgramada;
     private String estadoToma;
@@ -19,8 +18,7 @@ public class HoraProgramacion {
     }
 
     public void programarToma() {
-        System.out.println("Toma programada para el "
-                + fechaProgramada + " a las " + horaProgramada);
+        System.out.println("Toma programada para el " + fechaProgramada + " a las " + horaProgramada);
     }
 
     public void actualizarProgramacion(String fechaProgramada, String horaProgramada) {

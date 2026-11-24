@@ -3,7 +3,6 @@ package recordatoriomedicamentos.interfaz;
 import java.util.ArrayList;
 
 public class Recordatorio {
-
     private String nombreTratamiento;
     private String horaProgramada;
     private String frecuencia;
@@ -20,8 +19,7 @@ public class Recordatorio {
 
     public void generarRecordatorio() {
         if (estado) {
-            System.out.println("Recordatorio generado para "
-                    + nombreTratamiento + " a las " + horaProgramada);
+            System.out.println("Recordatorio generado para " + nombreTratamiento + " a las " + horaProgramada);
         }
     }
 
