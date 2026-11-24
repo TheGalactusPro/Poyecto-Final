@@ -99,4 +99,16 @@ public class Usuario {
     public HistorialAdministracion getHistorial() {
         return historial;
     }
+
+    public Usuario(String nombreCompleto, String nombreUsuario, String contrasena) {
+        this.nombreCompleto = nombreCompleto;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasena = contrasena;
+
+        this.tratamientos = new ArrayList<>();
+        this.sesiones = new ArrayList<>();
+        this.recuperaciones = new ArrayList<>();
+        this.reportes = new ArrayList<>();
+        this.historial = new HistorialAdministracion();
+    }
 }

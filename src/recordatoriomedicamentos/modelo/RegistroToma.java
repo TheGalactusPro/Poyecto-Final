@@ -2,50 +2,50 @@ package recordatoriomedicamentos.modelo;
 
 public class RegistroToma {
 
-    private Inventario inventario;
+    private Medicamento medicamento;
     private String estadoToma;
     private String fechaHoraReal;
     private int cantidadAdministrada;
     private String observacion;
 
     public void registrarToma() {
-        System.out.println("Registro de toma guardado.");
+        System.out.println("Registro de toma guardado correctamente.");
     }
 
     public void actualizarEstadoToma(String estadoToma) {
-        if (estadoToma != null && !estadoToma.trim().isEmpty()) {
-            this.estadoToma = estadoToma;
-        }
+        this.estadoToma = estadoToma;
     }
 
     public void descontarInventario() {
-        if (inventario != null && cantidadAdministrada > 0
-                && inventario.verificarDisponibilidad(cantidadAdministrada)) {
-
-            inventario.descontarCantidad(cantidadAdministrada);
-            System.out.println("Inventario actualizado.");
-        } else {
-            System.out.println("No hay suficiente inventario.");
+        if (medicamento != null && cantidadAdministrada > 0) {
+            medicamento.descontarCantidad(cantidadAdministrada);
         }
     }
 
     public void consultarRegistro() {
-        System.out.println("Estado: " + estadoToma);
+        System.out.println("Medicamento: " + medicamento.getNombreMedicamento());
+        System.out.println("Estado de la toma: " + estadoToma);
         System.out.println("Fecha y hora: " + fechaHoraReal);
         System.out.println("Cantidad administrada: " + cantidadAdministrada);
         System.out.println("Observación: " + observacion);
     }
 
-    public Inventario getInventario() {
-        return inventario;
+    // Getters y setters
+
+    public Medicamento getMedicamento() {
+        return medicamento;
     }
 
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
+    public void setMedicamento(Medicamento medicamento) {
+        this.medicamento = medicamento;
     }
 
     public String getEstadoToma() {
         return estadoToma;
+    }
+
+    public void setEstadoToma(String estadoToma) {
+        this.estadoToma = estadoToma;
     }
 
     public String getFechaHoraReal() {
