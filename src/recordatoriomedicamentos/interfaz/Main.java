@@ -49,9 +49,9 @@ public class Main {
     public static void cargarDatosPredeterminados() {
         Usuario juan = new Usuario("Juan Pérez", "juan", "1234");
         usuarios.add(juan);
-        juan.getMedicamentos().add(new Medicamento("Paracetamol", "Tabletas", 30, "10-01-2026"));
-        juan.getMedicamentos().add(new Medicamento("Loratadina", "Tabletas", 20, "15-02-2026"));
-        juan.getMedicamentos().add(new Medicamento("Ibuprofeno", "Tabletas", 25, "20-03-2026"));
+        juan.getMedicamentos().add(new Medicamento("Paracetamol", "Tabletas", 30, "10-01-2027"));
+        juan.getMedicamentos().add(new Medicamento("Loratadina", "Tabletas", 20, "15-02-2027"));
+        juan.getMedicamentos().add(new Medicamento("Ibuprofeno", "Tabletas", 25, "20-03-2027"));
     }
 
     // MÓDULO 1: INICIO DE SESIÓN Y USUARIOS
@@ -167,25 +167,24 @@ public class Main {
             valida = true;
             System.out.print(mensaje);
             fecha = entrada.nextLine();
-            if (!fecha.matches("\\d{2}-\\d{2}-\\d{4}")) {
-                System.out.println("Formato incorrecto. Utilice dd-MM-yyyy.");
+            if (!fecha.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                System.out.println("La fecha debe ser del dia 2026-11-23 en adelante");
                 valida = false;
                 continue;
             }
             String[] partes = fecha.split("-");
-            int dia = Integer.parseInt(partes[0]);
+            int anio = Integer.parseInt(partes[0]);
             int mes = Integer.parseInt(partes[1]);
-            int anio = Integer.parseInt(partes[2]);
+            int dia = Integer.parseInt(partes[2]);
             if (mes < 1 || mes > 12 || dia < 1) {
-                System.out.println("La fecha ingresada no es válida.");
+                System.out.println("La fecha ingresada no es válida");
                 valida = false;
                 continue;
             }
             int diasMes;
             switch (mes) {
                 case 2:
-                    if ((anio % 4 == 0 && anio % 100 != 0)
-                            || anio % 400 == 0) {
+                    if ((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0) {
                         diasMes = 29;
                     } else {
                         diasMes = 28;
@@ -197,19 +196,18 @@ public class Main {
                 case 11:
                     diasMes = 30;
                     break;
+
                 default:
                     diasMes = 31;
                     break;
             }
             if (dia > diasMes) {
-                System.out.println("El día ingresado no existe en ese mes.");
+                System.out.println("El día no existe en ese mes.");
                 valida = false;
                 continue;
             }
-            if (anio > 2026
-                    || (anio == 2026 && mes > 11)
-                    || (anio == 2026 && mes == 11 && dia > 22)) {
-                System.out.println("La fecha no puede ser posterior al 22-11-2026.");
+            if (fecha.compareTo("2026-11-23") < 0) {
+                System.out.println("La fecha debe ser del dia 2026-11-23 en adelante");
                 valida = false;
             }
         } while (!valida);
@@ -273,7 +271,7 @@ public class Main {
             System.out.println("La cantidad no puede ser negativa.");
             return;
         }
-        String fecha = leerFechaValida("Fecha de caducidad (dd-MM-yyyy): ");
+        String fecha = leerFechaValida("Fecha de caducidad (YYYY-MM-DD): ");
         Medicamento medicamento = new Medicamento(nombre, unidad, cantidad, fecha);
         usuario.getMedicamentos().add(medicamento);
         medicamento.registrarMedicamento();
@@ -322,7 +320,6 @@ public class Main {
             String nuevaFecha = entrada.nextLine();
             medicamento.setFechaCaducidad(nuevaFecha);
         }
-        System.out.println("Medicamento modificado correctamente.");
     }
 
     public static void eliminarMedicamento() {
@@ -547,67 +544,51 @@ public class Main {
     public static void programarToma() {
         System.out.println("\nPROGRAMAR TOMA");
         if (usuario.getTratamientos().isEmpty()) {
-            System.out.println("No hay tratamientos registrados.");
+            System.out.println("No hay tratamientos registrados");
             return;
         }
-        // Mostrar tratamientos
         System.out.println("\nTRATAMIENTOS");
         for (int i = 0; i < usuario.getTratamientos().size(); i++) {
             System.out.println((i + 1) + ". "
                     + usuario.getTratamientos().get(i).getNombreTratamiento());
         }
-        System.out.print("\nSeleccione un tratamiento: ");
+        System.out.print("\nSeleccione el tratamiento: ");
         int opcionTratamiento = entrada.nextInt();
         entrada.nextLine();
-        if (opcionTratamiento < 1 ||
-                opcionTratamiento > usuario.getTratamientos().size()) {
-            System.out.println("Opción no válida.");
+        if (opcionTratamiento < 1 || opcionTratamiento > usuario.getTratamientos().size()) {
+            System.out.println("Selección no válida.");
             return;
         }
-        Tratamiento tratamiento = usuario.getTratamientos()
-                .get(opcionTratamiento - 1);
-        // Mostrar medicamentos del tratamiento
-        System.out.println("\nMEDICAMENTOS DEL TRATAMIENTO");
+        Tratamiento tratamiento = usuario.getTratamientos().get(opcionTratamiento - 1);
         if (tratamiento.getMedicamentos().isEmpty()) {
             System.out.println("Este tratamiento no tiene medicamentos.");
             return;
         }
+        System.out.println("\nMEDICAMENTOS");
         for (int i = 0; i < tratamiento.getMedicamentos().size(); i++) {
-            System.out.println((i + 1) + ". "
-                    + tratamiento.getMedicamentos().get(i)
-                    .getNombreMedicamento());
+            System.out.println((i + 1) + ". " + tratamiento.getMedicamentos().get(i).getNombreMedicamento());
         }
-        System.out.print("\nSeleccione un medicamento: ");
+        System.out.print("\nSeleccione el medicamento: ");
         int opcionMedicamento = entrada.nextInt();
         entrada.nextLine();
-        if (opcionMedicamento < 1 ||
-                opcionMedicamento > tratamiento.getMedicamentos().size()) {
-            System.out.println("Opción no válida.");
+        if (opcionMedicamento < 1 || opcionMedicamento > tratamiento.getMedicamentos().size()) {
+            System.out.println("Selección no válida.");
             return;
         }
         Medicamento medicamento = tratamiento.getMedicamentos().get(opcionMedicamento - 1);
-        // Configuración del horario
-        System.out.println("\nCONFIGURACIÓN DEL HORARIO");
         System.out.print("Hora de administración: ");
         String hora = entrada.nextLine();
         System.out.print("Frecuencia (Horas): ");
         String frecuencia = entrada.nextLine();
-        System.out.print("Días de la semana: ");
+        System.out.print("Días de administración: ");
         String dias = entrada.nextLine();
-        System.out.print("Fecha de inicio (AAAA-MM-DD): ");
-        String inicio = entrada.nextLine();
-        System.out.print("Fecha de finalización (AAAA-MM-DD): ");
-        String fin = entrada.nextLine();
-        // Crear horario
-        Horario horario = new Horario(hora, frecuencia, dias, inicio, fin);
+        String fecha = leerFechaValida("Fecha de inicio (YYYY-MM-DD): ");
+        Horario horario = new Horario(hora, frecuencia, dias);
+        HoraProgramacion programacion = new HoraProgramacion(fecha, hora);
+        horario.getProgramaciones().add(programacion);
         medicamento.getHorarios().add(horario);
         horario.configurarHorario();
-        System.out.println("\nProgramación registrada correctamente.");
-        System.out.println("Tratamiento: " + tratamiento.getNombreTratamiento());
-        System.out.println("Medicamento: " + medicamento.getNombreMedicamento());
-        System.out.println("Hora: " + hora);
-        System.out.println("Frecuencia: " + frecuencia);
-        System.out.println("Días: " + dias);
+        System.out.println("Toma programada correctamente");
     }
 
     public static void consultarProgramaciones() {
@@ -681,65 +662,60 @@ public class Main {
     }
 
     public static void programarRecordatorio() {
-        System.out.println("\nPROGRAMAR RECORDATORIO");
         if (usuario.getTratamientos().isEmpty()) {
             System.out.println("No hay tratamientos registrados.");
             return;
         }
-        System.out.println("\nTRATAMIENTOS");
+        System.out.println("TRATAMIENTOS");
         for (int i = 0; i < usuario.getTratamientos().size(); i++) {
             System.out.println((i + 1) + ". " + usuario.getTratamientos().get(i).getNombreTratamiento());
         }
-        System.out.print("\nSeleccione el tratamiento: ");
+        System.out.print("Seleccione el tratamiento: ");
         int opcionTratamiento = entrada.nextInt();
         entrada.nextLine();
         if (opcionTratamiento < 1 || opcionTratamiento > usuario.getTratamientos().size()) {
-            System.out.println("Selección no válida.");
+            System.out.println("Opción no válida.");
             return;
         }
         Tratamiento tratamiento = usuario.getTratamientos().get(opcionTratamiento - 1);
         if (tratamiento.getMedicamentos().isEmpty()) {
-            System.out.println("Este tratamiento no tiene medicamentos.");
+            System.out.println("El tratamiento no tiene medicamentos registrados.");
             return;
         }
-        System.out.println("\nMEDICAMENTOS");
+        System.out.println("MEDICAMENTOS");
         for (int i = 0; i < tratamiento.getMedicamentos().size(); i++) {
             System.out.println((i + 1) + ". " + tratamiento.getMedicamentos().get(i).getNombreMedicamento());
         }
-        System.out.print("\nSeleccione el medicamento: ");
+        System.out.print("Seleccione el medicamento: ");
         int opcionMedicamento = entrada.nextInt();
         entrada.nextLine();
         if (opcionMedicamento < 1 || opcionMedicamento > tratamiento.getMedicamentos().size()) {
-            System.out.println("Selección no válida.");
+            System.out.println("Opción no válida.");
             return;
         }
         Medicamento medicamento = tratamiento.getMedicamentos().get(opcionMedicamento - 1);
         if (medicamento.getHorarios().isEmpty()) {
-            System.out.println("Este medicamento no tiene horarios programados.");
+            System.out.println("El medicamento no tiene horarios programados.");
             return;
         }
-        System.out.println("\nHORARIOS");
-
+        System.out.println("HORARIOS");
         for (int i = 0; i < medicamento.getHorarios().size(); i++) {
             Horario horario = medicamento.getHorarios().get(i);
-            System.out.println((i + 1) + ". "
+            System.out.println((i + 1) + ". Hora: "
                     + horario.getHoraAdministracion()
-                    + " - " + horario.getFrecuencia());
+                    + " | Frecuencia: " + horario.getFrecuencia());
         }
-        System.out.print("\nSeleccione el horario: ");
+        System.out.print("Seleccione el horario: ");
         int opcionHorario = entrada.nextInt();
         entrada.nextLine();
         if (opcionHorario < 1 || opcionHorario > medicamento.getHorarios().size()) {
-            System.out.println("Selección no válida.");
+            System.out.println("Opción no válida.");
             return;
         }
         Horario horario = medicamento.getHorarios().get(opcionHorario - 1);
-        String fecha = leerFechaValida("Ingrese la fecha del recordatorio (dd-MM-yyyy): ");
+        String fecha = leerFechaValida("Fecha del recordatorio (YYYY-MM-DD): ");
         HoraProgramacion programacion = new HoraProgramacion(fecha, horario.getHoraAdministracion());
-        Recordatorio recordatorio = new Recordatorio(
-                tratamiento.getNombreTratamiento(),
-                horario.getHoraAdministracion(),
-                horario.getFrecuencia());
+        Recordatorio recordatorio = new Recordatorio(tratamiento.getNombreTratamiento(), horario.getHoraAdministracion(), horario.getFrecuencia());
         programacion.getRecordatorios().add(recordatorio);
         horario.getProgramaciones().add(programacion);
         recordatorio.programarRecordatorio();

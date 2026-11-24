@@ -5,16 +5,16 @@ import java.util.ArrayList;
 public class Horario {
     private String horaAdministracion;
     private String frecuencia;
-    private String diasSemana;
+    private String dias;
     private boolean estado;
     private String inicio;
     private String fin;
     private ArrayList<HoraProgramacion> programaciones;
 
-    public Horario(String horaAdministracion, String frecuencia, String diasSemana, String inicio, String fin) {
+    public Horario(String horaAdministracion, String frecuencia, String dias) {
         this.horaAdministracion = horaAdministracion;
         this.frecuencia = frecuencia;
-        this.diasSemana = diasSemana;
+        this.dias = dias;
         this.inicio = inicio;
         this.fin = fin;
         this.estado = true;
@@ -28,15 +28,15 @@ public class Horario {
         }
     }
 
-    public void modificarHorario(String horaAdministracion, String frecuencia, String diasSemana) {
+    public void modificarHorario(String horaAdministracion, String frecuencia, String dias) {
         if (horaAdministracion != null && !horaAdministracion.trim().isEmpty()) {
             this.horaAdministracion = horaAdministracion;
         }
         if (frecuencia != null && !frecuencia.trim().isEmpty()) {
             this.frecuencia = frecuencia;
         }
-        if (diasSemana != null && !diasSemana.trim().isEmpty()) {
-            this.diasSemana = diasSemana;
+        if (dias != null && !dias.trim().isEmpty()) {
+            this.dias = dias;
         }
         System.out.println("Horario modificado correctamente.");
     }
@@ -44,7 +44,7 @@ public class Horario {
     public void consultarHorario() {
         System.out.println("Hora: " + horaAdministracion);
         System.out.println("Frecuencia: " + frecuencia);
-        System.out.println("Días: " + diasSemana);
+        System.out.println("Días: " + dias);
         System.out.println("Inicio: " + inicio);
         System.out.println("Fin: " + fin);
         System.out.println("Estado: " + (estado ? "Activo" : "Inactivo"));
@@ -89,7 +89,7 @@ public class Horario {
     }
 
     public String getDiasSemana() {
-        return diasSemana;
+        return dias;
     }
 
     public boolean isEstado() {
