@@ -398,7 +398,7 @@ public class Main {
 
     public static void registrarTratamiento() {
 
-        System.out.println("\n-EGISTRAR TRATAMIENTO");
+        System.out.println("\nREGISTRAR TRATAMIENTO");
 
         System.out.print("Nombre del tratamiento: ");
         String nombre = entrada.nextLine();
@@ -466,8 +466,6 @@ public class Main {
         if (medicamentoAgregado) {
             usuario.getTratamientos().add(tratamiento);
             tratamiento.registrarTratamiento();
-
-            System.out.println("Tratamiento registrado correctamente.");
         } else {
             System.out.println("No se registró el tratamiento.");
         }
@@ -506,9 +504,11 @@ public class Main {
             return;
         }
 
+        System.out.println("\nTRATAMIENTOS");
+
         for (int i = 0; i < usuario.getTratamientos().size(); i++) {
-            System.out.println((i + 1) + ". "
-                    + usuario.getTratamientos().get(i).getNombreTratamiento());
+            System.out.println((i + 1) + ". " +
+                    usuario.getTratamientos().get(i).getNombreTratamiento());
         }
 
         System.out.print("\nSeleccione el tratamiento que desea modificar: ");
@@ -516,22 +516,17 @@ public class Main {
         entrada.nextLine();
 
         if (opcion < 1 || opcion > usuario.getTratamientos().size()) {
-            System.out.println("Opción no válida.");
+            System.out.println("Selección no válida.");
             return;
         }
 
-        Tratamiento tratamiento = usuario.getTratamientos().get(opcion - 1);
+        Tratamiento tratamiento =
+                usuario.getTratamientos().get(opcion - 1);
 
-        System.out.print("Nuevo nombre del tratamiento: ");
-        String nombre = entrada.nextLine();
+        System.out.print("Ingrese el nuevo nombre del tratamiento: ");
+        String nuevoNombre = entrada.nextLine();
 
-        System.out.print("Nueva fecha de inicio: ");
-        String fechaInicio = entrada.nextLine();
-
-        System.out.print("Nueva fecha de finalización: ");
-        String fechaFin = entrada.nextLine();
-
-        tratamiento.modificarTratamiento(nombre, fechaInicio, fechaFin);
+        tratamiento.modificarTratamiento(nuevoNombre, "", "");
 
         System.out.println("Tratamiento modificado correctamente.");
     }
