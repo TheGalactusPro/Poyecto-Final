@@ -71,7 +71,7 @@ public class Main {
             System.out.println("\nBienvenido, " + usuario.getNombreCompleto());
             Sesion sesion = new Sesion(LocalDateTime.now().toString());
             sesion.setNombreUsuario(usuario.getNombreUsuario());
-            sesion.iniciarSesion()
+            sesion.iniciarSesion();
             usuario.getSesiones().add(sesion);
             menuPrincipal();
             sesion.cerrarSesion();
