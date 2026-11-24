@@ -1,17 +1,19 @@
 package recordatoriomedicamentos.interfaz;
 
 import recordatoriomedicamentos.modelo.*;
-import recordatoriomedicamentos.negocio.RecuperacionContrasena;
-import recordatoriomedicamentos.negocio.Sesion;
+import recordatoriomedicamentos.modelo.Sesion;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 
 public class Main {
+
     static Scanner entrada = new Scanner(System.in);
     static ArrayList<Usuario> usuarios = new ArrayList<>();
     static Usuario usuario;
+
     static ArrayList<Medicamento> medicamentos = new ArrayList<>();
     public static void main(String[] args) {
         cargarDatosPredeterminados();
@@ -47,58 +49,77 @@ public class Main {
 
     public static void cargarDatosPredeterminados() {
         Usuario juan = new Usuario("Juan Pérez", "juan", "1234");
+
         usuarios.add(juan);
-        medicamentos.add(new Medicamento("Paracetamol", "Tabletas", 30, "2028-01-10"));
-        medicamentos.add(new Medicamento("Loratadina", "Tabletas", 20, "2028-02-15"));
-        medicamentos.add(new Medicamento("Ibuprofeno", "Tabletas", 25, "2028-03-20"));
+
+        juan.getMedicamentos().add(new Medicamento("Paracetamol", "Tabletas", 30, "2028-01-10"));
+
+        juan.getMedicamentos().add(new Medicamento("Loratadina", "Tabletas", 20, "2028-02-15"));
+
+        juan.getMedicamentos().add(new Medicamento("Ibuprofeno", "Tabletas", 25, "2028-03-20"));
     }
 
     // MÓDULO 1: INICIO DE SESIÓN Y USUARIOS
 
     public static void iniciarSesion() {
+        System.out.println("\nINICIAR SESIÓN");
+
         System.out.print("Ingrese su nombre de usuario: ");
         String nombreUsuario = entrada.nextLine();
+
         System.out.print("Ingrese su contraseña: ");
         String contrasena = entrada.nextLine();
-        usuario = null;
+
         for (Usuario u : usuarios) {
             if (u.validarCredenciales(nombreUsuario, contrasena)) {
                 usuario = u;
-                break;
+
+                System.out.println("\nBienvenido, "
+                        + usuario.getNombreCompleto());
+
+                return;
             }
         }
-        if (usuario != null) {
-            System.out.println("\nBienvenido, " + usuario.getNombreCompleto());
-            Sesion sesion = new Sesion(LocalDateTime.now().toString());
-            sesion.setNombreUsuario(usuario.getNombreUsuario());
-            sesion.iniciarSesion();
-            usuario.getSesiones().add(sesion);
-            menuPrincipal();
-            sesion.cerrarSesion();
-        } else {
-            System.out.println("Nombre de usuario o contraseña incorrectos");
-        }
+
+        System.out.println("Nombre de usuario o contraseña incorrectos.");
     }
 
     public static void registrarUsuario() {
+        System.out.println("\nREGISTRAR USUARIO");
+
         System.out.print("Ingrese su nombre completo: ");
         String nombreCompleto = entrada.nextLine();
 
-        System.out.print("Ingrese su nombre de usuario: ");
+        System.out.print("Ingrese un nombre de usuario: ");
         String nombreUsuario = entrada.nextLine();
 
-        System.out.print("Ingrese su contraseña: ");
+        if (existeUsuario(nombreUsuario)) {
+            System.out.println("Este nombre de usuario ya está registrado.");
+            return;
+        }
+
+        System.out.print("Ingrese una contraseña: ");
         String contrasena = entrada.nextLine();
 
-        Usuario nuevoUsuario = new Usuario(nombreCompleto, nombreUsuario, contrasena);
+        Usuario nuevoUsuario = new Usuario(
+                nombreCompleto, nombreUsuario, contrasena);
+
         usuarios.add(nuevoUsuario);
 
         System.out.println("Usuario registrado correctamente.");
     }
 
     public static void recuperarUsuario() {
-        System.out.print("Ingrese su nombre de usuario actual: ");
+        System.out.println("\nRECUPERAR CONTRASEÑA");
+
+        System.out.print("Ingrese su nombre de usuario: ");
         String nombreUsuario = entrada.nextLine();
+
+        if (!existeUsuario(nombreUsuario)) {
+            System.out.println("El usuario no existe.");
+            return;
+        }
+
         Usuario usuarioEncontrado = null;
 
         for (Usuario u : usuarios) {
@@ -108,39 +129,22 @@ public class Main {
             }
         }
 
-        if (usuarioEncontrado != null) {
-            System.out.println("\n¿Qué desea cambiar?");
-            System.out.println("1. Nombre de usuario");
-            System.out.println("2. Contraseña");
-            System.out.print("Seleccione una opción: ");
-            int opcion = Integer.parseInt(entrada.nextLine());
+        System.out.print("Ingrese su nueva contraseña: ");
+        String nuevaContrasena = entrada.nextLine();
 
-            switch (opcion) {
-                case 1:
-                    System.out.print("Ingrese el nuevo nombre de usuario: ");
-                    String nuevoNombreUsuario = entrada.nextLine();
+        usuarioEncontrado.cambiarContrasena(nuevaContrasena);
 
-                    usuarioEncontrado.setNombreUsuario(nuevoNombreUsuario);
+        System.out.println("Contraseña actualizada correctamente.");
+    }
 
-                    System.out.println("Nombre de usuario actualizado correctamente");
-                    break;
-
-                case 2:
-                    System.out.print("Ingrese la nueva contraseña: ");
-                    String nuevaContrasena = entrada.nextLine();
-
-                    usuarioEncontrado.cambiarContrasena(nuevaContrasena);
-
-                    System.out.println("Contraseña actualizada correctamente");
-                    break;
-
-                default:
-                    System.out.println("Opción no válida");
-                    break;
+    public static boolean existeUsuario(String nombreUsuario) {
+        for (Usuario u : usuarios) {
+            if (u.getNombreUsuario() != null
+                    && u.getNombreUsuario().equalsIgnoreCase(nombreUsuario)) {
+                return true;
             }
-        } else {
-            System.out.println("El nombre de usuario no existe");
         }
+        return false;
     }
 
     // MENÚ PRINCIPAL
@@ -233,38 +237,40 @@ public class Main {
     }
 
     public static void registrarMedicamento() {
+        System.out.println("\nREGISTRAR MEDICAMENTO");
+
         System.out.print("Nombre del medicamento: ");
         String nombre = entrada.nextLine();
 
         System.out.print("Unidad de medida: ");
         String unidad = entrada.nextLine();
 
-        System.out.print("Cantidad disponible: ");
-        int cantidad = Integer.parseInt(entrada.nextLine());
+        System.out.print("Cantidad: ");
+        int cantidad = entrada.nextInt();
+        entrada.nextLine();
 
-        System.out.print("Fecha de caducidad (AAAA-MM-DD): ");
-        String fechaCaducidad = entrada.nextLine();
+        System.out.print("Fecha de caducidad: ");
+        String fecha = entrada.nextLine();
 
-        if (nombre.trim().isEmpty() || unidad.trim().isEmpty()
-                || cantidad < 0 || fechaCaducidad.trim().isEmpty()) {
-            System.out.println("Datos no válidos.");
-            return;
-        }
+        Medicamento medicamento = new Medicamento(
+                nombre, unidad, cantidad, fecha
+        );
 
-        Medicamento medicamento = new Medicamento(nombre, unidad, cantidad, fechaCaducidad);
-        medicamentos.add(medicamento);
+        usuario.getMedicamentos().add(medicamento);
 
-        System.out.println("Medicamento registrado correctamente");
+        medicamento.registrarMedicamento();
     }
 
     public static void consultarMedicamentos() {
         System.out.println("\nMEDICAMENTOS REGISTRADOS");
 
-        for (Medicamento medicamento : medicamentos) {
-            if (medicamento.isEstado()) {
-                medicamento.consultarMedicamento();
-                System.out.println("-------------------------");
-            }
+        if (usuario.getMedicamentos().isEmpty()) {
+            System.out.println("No hay medicamentos registrados.");
+            return;
+        }
+
+        for (Medicamento medicamento : usuario.getMedicamentos()) {
+            medicamento.consultarMedicamento();
         }
     }
 

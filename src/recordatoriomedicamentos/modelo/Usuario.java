@@ -3,7 +3,6 @@ package recordatoriomedicamentos.modelo;
 import recordatoriomedicamentos.negocio.HistorialAdministracion;
 import recordatoriomedicamentos.negocio.RecuperacionContrasena;
 import recordatoriomedicamentos.negocio.Reporte;
-import recordatoriomedicamentos.negocio.Sesion;
 
 import java.util.ArrayList;
 
@@ -12,37 +11,36 @@ public class Usuario {
     private String nombreCompleto;
     private String nombreUsuario;
     private String contrasena;
+
+    private ArrayList<Medicamento> medicamentos;
     private ArrayList<Tratamiento> tratamientos;
     private ArrayList<Sesion> sesiones;
     private ArrayList<RecuperacionContrasena> recuperaciones;
     private ArrayList<Reporte> reportes;
+
     private HistorialAdministracion historial;
 
-    public Usuario() {
+    public Usuario(String nombreCompleto, String nombreUsuario, String contrasena) {
+        this.nombreCompleto = nombreCompleto;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasena = contrasena;
+
+        medicamentos = new ArrayList<>();
         tratamientos = new ArrayList<>();
         sesiones = new ArrayList<>();
         recuperaciones = new ArrayList<>();
         reportes = new ArrayList<>();
+
         historial = new HistorialAdministracion();
     }
 
-    public boolean registrarUsuario() {
-        if (nombreCompleto != null && !nombreCompleto.trim().isEmpty()
-                && nombreUsuario != null && !nombreUsuario.trim().isEmpty()
-                && contrasena != null && !contrasena.trim().isEmpty()) {
-            return true;
-        }
-        return false;
+    public void registrarUsuario() {
+        System.out.println("Usuario registrado correctamente.");
     }
 
     public void modificarDatos(String nombreCompleto, String nombreUsuario) {
-        if (nombreCompleto != null && !nombreCompleto.trim().isEmpty()) {
-            this.nombreCompleto = nombreCompleto;
-        }
-
-        if (nombreUsuario != null && !nombreUsuario.trim().isEmpty()) {
-            this.nombreUsuario = nombreUsuario;
-        }
+        this.nombreCompleto = nombreCompleto;
+        this.nombreUsuario = nombreUsuario;
     }
 
     public boolean validarCredenciales(String nombreUsuario, String contrasena) {
@@ -51,9 +49,7 @@ public class Usuario {
     }
 
     public void cambiarContrasena(String nuevaContrasena) {
-        if (nuevaContrasena != null && !nuevaContrasena.trim().isEmpty()) {
-            this.contrasena = nuevaContrasena;
-        }
+        this.contrasena = nuevaContrasena;
     }
 
     public String getNombreCompleto() {
@@ -80,6 +76,10 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
+    public ArrayList<Medicamento> getMedicamentos() {
+        return medicamentos;
+    }
+
     public ArrayList<Tratamiento> getTratamientos() {
         return tratamientos;
     }
@@ -98,17 +98,5 @@ public class Usuario {
 
     public HistorialAdministracion getHistorial() {
         return historial;
-    }
-
-    public Usuario(String nombreCompleto, String nombreUsuario, String contrasena) {
-        this.nombreCompleto = nombreCompleto;
-        this.nombreUsuario = nombreUsuario;
-        this.contrasena = contrasena;
-
-        this.tratamientos = new ArrayList<>();
-        this.sesiones = new ArrayList<>();
-        this.recuperaciones = new ArrayList<>();
-        this.reportes = new ArrayList<>();
-        this.historial = new HistorialAdministracion();
     }
 }
