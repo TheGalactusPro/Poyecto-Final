@@ -447,18 +447,15 @@ public class Main {
     public static void consultarTratamientos() {
         System.out.println("\nTRATAMIENTOS REGISTRADOS");
         if (usuario.getTratamientos().isEmpty()) {
-            System.out.println("No hay tratamientos registrados");
+            System.out.println("No hay tratamientos registrados en este perfil.");
             return;
         }
         for (int i = 0; i < usuario.getTratamientos().size(); i++) {
-            Tratamiento tratamiento = usuario.getTratamientos().get(i);
-            System.out.println("\nTratamiento " + (i + 1));
-            tratamiento.consultarTratamiento();
-            System.out.println("Medicamentos:");
-            for (int j = 0; j < tratamiento.getMedicamentos().size(); j++) {
-                System.out.println((j + 1) + ". "
-                        + tratamiento.getMedicamentos().get(j)
-                        .getNombreMedicamento());
+            System.out.println("\nTRATAMIENTO " + (i + 1));
+            usuario.getTratamientos().get(i).consultarTratamiento();
+            System.out.println("MEDICAMENTOS ASOCIADOS:");
+            for (Medicamento medicamento : usuario.getTratamientos().get(i).getMedicamentos()) {
+                System.out.println("- " + medicamento.getNombreMedicamento());
             }
         }
     }

@@ -39,4 +39,8 @@ public class Tratamiento {
     public ArrayList<Medicamento> getMedicamentos() {
         return medicamentos;
     }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
 }
