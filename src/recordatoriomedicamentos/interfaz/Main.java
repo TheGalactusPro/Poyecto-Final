@@ -247,26 +247,30 @@ public class Main {
         } while (opcion != 7);
     }
 
-    // Módulo 2
     public static void registrarMedicamento() {
+
         System.out.println("\nREGISTRAR MEDICAMENTO");
 
         System.out.print("Nombre del medicamento: ");
         String nombre = entrada.nextLine();
 
-        System.out.print("Unidad de medida: ");
+        System.out.print("Unidad de medida (Jarabe, Tabletas...): ");
         String unidad = entrada.nextLine();
 
-        System.out.print("Cantidad: ");
+        System.out.print("Cantidad disponible: ");
         int cantidad = entrada.nextInt();
         entrada.nextLine();
+
+        if (cantidad < 0) {
+            System.out.println("La cantidad no puede ser negativa.");
+            return;
+        }
 
         System.out.print("Fecha de caducidad: ");
         String fecha = entrada.nextLine();
 
         Medicamento medicamento = new Medicamento(
-                nombre, unidad, cantidad, fecha
-        );
+                nombre, unidad, cantidad, fecha);
 
         usuario.getMedicamentos().add(medicamento);
 
@@ -274,70 +278,152 @@ public class Main {
     }
 
     public static void consultarMedicamentos() {
+
         System.out.println("\nMEDICAMENTOS REGISTRADOS");
+
+        if (usuario.getMedicamentos().isEmpty()) {
+            System.out.println("No hay medicamentos registrados en este perfil.");
+            return;
+        }
+
+        for (int i = 0; i < usuario.getMedicamentos().size(); i++) {
+
+            System.out.println("\nMEDICAMENTO " + (i + 1));
+
+            usuario.getMedicamentos().get(i).consultarMedicamento();
+        }
+    }
+
+    public static void modificarMedicamento() {
+
+        System.out.println("\nMODIFICAR MEDICAMENTO");
 
         if (usuario.getMedicamentos().isEmpty()) {
             System.out.println("No hay medicamentos registrados.");
             return;
         }
 
-        for (Medicamento medicamento : usuario.getMedicamentos()) {
-            medicamento.consultarMedicamento();
+        System.out.println("\nMEDICAMENTOS");
+
+        for (int i = 0; i < usuario.getMedicamentos().size(); i++) {
+
+            System.out.println((i + 1) + ". "
+                    + usuario.getMedicamentos().get(i).getNombreMedicamento());
         }
-    }
 
-    public static void modificarMedicamento() {
-        Medicamento medicamento = buscarMedicamento();
+        System.out.print("\nSeleccione el medicamento que desea modificar: ");
+        int opcion = entrada.nextInt();
+        entrada.nextLine();
 
-        if (medicamento != null) {
-            System.out.print("Nuevo nombre: ");
-            String nombre = entrada.nextLine();
-
-            System.out.print("Nueva unidad de medida: ");
-            String unidad = entrada.nextLine();
-
-            System.out.print("Nueva fecha de caducidad (AAAA-MM-DD): ");
-            String fechaCaducidad = entrada.nextLine();
-
-            if (nombre.trim().isEmpty() || unidad.trim().isEmpty()
-                    || fechaCaducidad.trim().isEmpty()) {
-                System.out.println("Datos no válidos.");
-                return;
-            }
-
-            medicamento.modificarMedicamento(nombre, unidad);
-            medicamento.setFechaCaducidad(fechaCaducidad);
-
-            System.out.println("Medicamento modificado correctamente.");
+        if (opcion < 1 || opcion > usuario.getMedicamentos().size()) {
+            System.out.println("Selección no válida.");
+            return;
         }
+
+        Medicamento medicamento = usuario.getMedicamentos().get(opcion - 1);
+
+        System.out.print("Ingrese el nuevo nombre: ");
+        String nuevoNombre = entrada.nextLine();
+
+        System.out.print("Ingrese la nueva unidad de medida: ");
+        String nuevaUnidad = entrada.nextLine();
+
+        medicamento.modificarMedicamento(nuevoNombre, nuevaUnidad);
+
+        System.out.print("¿Desea modificar también la fecha de caducidad? (1. Sí / 0. No): ");
+        int respuesta = entrada.nextInt();
+        entrada.nextLine();
+
+        if (respuesta == 1) {
+
+            System.out.print("Ingrese la nueva fecha de caducidad: ");
+            String nuevaFecha = entrada.nextLine();
+
+            medicamento.setFechaCaducidad(nuevaFecha);
+        }
+
+        System.out.println("Medicamento modificado correctamente.");
     }
 
     public static void eliminarMedicamento() {
-        Medicamento medicamento = buscarMedicamento();
 
-        if (medicamento != null) {
-            medicamento.eliminarMedicamento();
+        System.out.println("\nELIMINAR MEDICAMENTO");
 
-            System.out.println("Medicamento eliminado correctamente.");
+        if (usuario.getMedicamentos().isEmpty()) {
+            System.out.println("No hay medicamentos registrados.");
+            return;
         }
+
+        System.out.println("\nMEDICAMENTOS");
+
+        for (int i = 0; i < usuario.getMedicamentos().size(); i++) {
+
+            System.out.println((i + 1) + ". "
+                    + usuario.getMedicamentos().get(i).getNombreMedicamento());
+        }
+
+        System.out.print("\nSeleccione el medicamento que desea eliminar: ");
+        int opcion = entrada.nextInt();
+        entrada.nextLine();
+
+        if (opcion < 1 || opcion > usuario.getMedicamentos().size()) {
+            System.out.println("Selección no válida.");
+            return;
+        }
+
+        Medicamento medicamento = usuario.getMedicamentos().get(opcion - 1);
+
+        medicamento.eliminarMedicamento();
+
+        usuario.getMedicamentos().remove(opcion - 1);
+
+        System.out.println("Medicamento eliminado correctamente.");
     }
 
     public static void agregarCantidad() {
-        Medicamento medicamento = buscarMedicamento();
 
-        if (medicamento != null) {
-            System.out.print("Cantidad que desea agregar: ");
-            int cantidad = Integer.parseInt(entrada.nextLine());
+        System.out.println("\nAGREGAR CANTIDAD");
 
-            if (cantidad > 0) {
-                medicamento.agregarCantidad(cantidad);
-
-                System.out.println("Cantidad actualizada correctamente.");
-                System.out.println("Cantidad disponible: " + medicamento.getCantidad());
-            } else {
-                System.out.println("Ingrese una cantidad mayor que cero.");
-            }
+        if (usuario.getMedicamentos().isEmpty()) {
+            System.out.println("No hay medicamentos registrados.");
+            return;
         }
+
+        System.out.println("\nMEDICAMENTOS");
+
+        for (int i = 0; i < usuario.getMedicamentos().size(); i++) {
+
+            Medicamento medicamento = usuario.getMedicamentos().get(i);
+
+            System.out.println((i + 1) + ". "
+                    + medicamento.getNombreMedicamento()
+                    + " - Cantidad: " + medicamento.getCantidad());
+        }
+
+        System.out.print("\nSeleccione el medicamento: ");
+        int opcion = entrada.nextInt();
+        entrada.nextLine();
+
+        if (opcion < 1 || opcion > usuario.getMedicamentos().size()) {
+            System.out.println("Selección no válida.");
+            return;
+        }
+
+        Medicamento medicamento = usuario.getMedicamentos().get(opcion - 1);
+
+        System.out.print("Ingrese la cantidad que desea agregar: ");
+        int cantidad = entrada.nextInt();
+        entrada.nextLine();
+
+        if (cantidad <= 0) {
+            System.out.println("La cantidad debe ser mayor que cero.");
+            return;
+        }
+
+        medicamento.agregarCantidad(cantidad);
+
+        System.out.println("Cantidad actualizada correctamente.");
+        System.out.println("Cantidad disponible: " + medicamento.getCantidad());
     }
 
     public static void consultarPocasExistencias() {
