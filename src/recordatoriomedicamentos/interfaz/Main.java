@@ -15,33 +15,44 @@ public class Main {
     static Usuario usuario;
 
     static ArrayList<Medicamento> medicamentos = new ArrayList<>();
-    public static void main(String[] args) {
+    public static void main() {
+
         cargarDatosPredeterminados();
+
         int opcion;
+
         do {
-            System.out.println("\nRECORDATORIO MEDICAMENTOS");
+            System.out.println("\nSISTEMA DE GESTIÓN DE MEDICAMENTOS");
             System.out.println("1. Iniciar sesión");
             System.out.println("2. Registrar usuario");
-            System.out.println("3. Recuperar usuario");
+            System.out.println("3. Recuperar contraseña");
             System.out.println("4. Salir del sistema");
             System.out.print("Seleccione una opción: ");
+
             opcion = entrada.nextInt();
             entrada.nextLine();
+
             switch (opcion) {
                 case 1:
                     iniciarSesion();
                     break;
+
                 case 2:
                     registrarUsuario();
                     break;
+
                 case 3:
                     recuperarUsuario();
                     break;
+
                 case 4:
-                    System.out.println("Vuelva pronto");
+                    System.out.println("Gracias por utilizar el sistema.");
+                    break;
+
                 default:
-                    System.out.println("Opción no válida");
+                    System.out.println("Opción no válida.");
             }
+
         } while (opcion != 4);
     }
 
@@ -49,42 +60,16 @@ public class Main {
 
     public static void cargarDatosPredeterminados() {
         Usuario juan = new Usuario("Juan Pérez", "juan", "1234");
-
         usuarios.add(juan);
-
         juan.getMedicamentos().add(new Medicamento("Paracetamol", "Tabletas", 30, "2028-01-10"));
-
         juan.getMedicamentos().add(new Medicamento("Loratadina", "Tabletas", 20, "2028-02-15"));
-
         juan.getMedicamentos().add(new Medicamento("Ibuprofeno", "Tabletas", 25, "2028-03-20"));
     }
 
     // MÓDULO 1: INICIO DE SESIÓN Y USUARIOS
 
-    public static void iniciarSesion() {
-        System.out.println("\nINICIAR SESIÓN");
-
-        System.out.print("Ingrese su nombre de usuario: ");
-        String nombreUsuario = entrada.nextLine();
-
-        System.out.print("Ingrese su contraseña: ");
-        String contrasena = entrada.nextLine();
-
-        for (Usuario u : usuarios) {
-            if (u.validarCredenciales(nombreUsuario, contrasena)) {
-                usuario = u;
-
-                System.out.println("\nBienvenido, "
-                        + usuario.getNombreCompleto());
-
-                return;
-            }
-        }
-
-        System.out.println("Nombre de usuario o contraseña incorrectos.");
-    }
-
     public static void registrarUsuario() {
+
         System.out.println("\nREGISTRAR USUARIO");
 
         System.out.print("Ingrese su nombre completo: ");
@@ -109,34 +94,6 @@ public class Main {
         System.out.println("Usuario registrado correctamente.");
     }
 
-    public static void recuperarUsuario() {
-        System.out.println("\nRECUPERAR CONTRASEÑA");
-
-        System.out.print("Ingrese su nombre de usuario: ");
-        String nombreUsuario = entrada.nextLine();
-
-        if (!existeUsuario(nombreUsuario)) {
-            System.out.println("El usuario no existe.");
-            return;
-        }
-
-        Usuario usuarioEncontrado = null;
-
-        for (Usuario u : usuarios) {
-            if (u.getNombreUsuario().equalsIgnoreCase(nombreUsuario)) {
-                usuarioEncontrado = u;
-                break;
-            }
-        }
-
-        System.out.print("Ingrese su nueva contraseña: ");
-        String nuevaContrasena = entrada.nextLine();
-
-        usuarioEncontrado.cambiarContrasena(nuevaContrasena);
-
-        System.out.println("Contraseña actualizada correctamente.");
-    }
-
     public static boolean existeUsuario(String nombreUsuario) {
         for (Usuario u : usuarios) {
             if (u.getNombreUsuario() != null
@@ -147,17 +104,73 @@ public class Main {
         return false;
     }
 
+    public static void iniciarSesion() {
+
+        System.out.println("\nINICIAR SESIÓN");
+
+        System.out.print("Ingrese su nombre de usuario: ");
+        String nombreUsuario = entrada.nextLine();
+
+        System.out.print("Ingrese su contraseña: ");
+        String contrasena = entrada.nextLine();
+
+        for (Usuario u : usuarios) {
+            if (u.validarCredenciales(nombreUsuario, contrasena)) {
+                usuario = u;
+                System.out.println("\nBienvenido, "+ usuario.getNombreCompleto());
+                menuPrincipalUsuario();
+                return;
+            }
+        }
+
+        System.out.println("Nombre de usuario o contraseña incorrectos.");
+    }
+
+    public static void recuperarUsuario() {
+
+        System.out.println("\nRECUPERAR CONTRASEÑA");
+
+        System.out.print("Ingrese su nombre de usuario: ");
+        String nombreUsuario = entrada.nextLine();
+
+        Usuario usuarioEncontrado = null;
+
+        for (Usuario u : usuarios) {
+
+            if (u.getNombreUsuario().equalsIgnoreCase(nombreUsuario)) {
+                usuarioEncontrado = u;
+                break;
+            }
+        }
+
+        if (usuarioEncontrado == null) {
+            System.out.println("El usuario no existe.");
+            return;
+        }
+
+        System.out.print("Ingrese su nueva contraseña: ");
+        String nuevaContrasena = entrada.nextLine();
+
+        usuarioEncontrado.cambiarContrasena(nuevaContrasena);
+
+        System.out.println("Contraseña actualizada correctamente.");
+    }
+
     // MENÚ PRINCIPAL
 
-    public static void menuPrincipal() {
+    public static void menuPrincipalUsuario() {
+
         int opcion;
+
         do {
+
             System.out.println("\nMENÚ PRINCIPAL");
             System.out.println("1. Gestión de medicamentos");
             System.out.println("2. Gestión de tratamientos y horarios");
             System.out.println("3. Recordatorios y registro de tomas");
             System.out.println("4. Reportes personales");
             System.out.println("5. Cerrar sesión");
+
             System.out.print("Seleccione una opción: ");
 
             opcion = entrada.nextInt();
@@ -167,27 +180,23 @@ public class Main {
                 case 1:
                     menuMedicamentos();
                     break;
-
                 case 2:
                     menuTratamientos();
                     break;
-
                 case 3:
                     menuRecordatorios();
                     break;
-
                 case 4:
                     System.out.println("Módulo por programar");
                     break;
-
                 case 5:
-                    System.out.println("Sesión cerrada.");
+                    usuario = null;
+                    System.out.println("Sesión cerrada correctamente.");
                     break;
 
                 default:
                     System.out.println("Opción no válida.");
             }
-
         } while (opcion != 5);
     }
 
@@ -195,6 +204,7 @@ public class Main {
 
     public static void menuMedicamentos() {
         int opcion;
+
         do {
             System.out.println("\nGESTIÓN DE MEDICAMENTOS");
             System.out.println("1. Registrar medicamento");
@@ -206,7 +216,9 @@ public class Main {
             System.out.println("7. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
 
-            opcion = Integer.parseInt(entrada.nextLine());
+            opcion = entrada.nextInt();
+            entrada.nextLine();
+
             switch (opcion) {
                 case 1:
                     registrarMedicamento();
@@ -230,12 +242,12 @@ public class Main {
                     System.out.println("Volviendo al menú principal...");
                     break;
                 default:
-                    System.out.println("Opción no válida");
-                    break;
+                    System.out.println("Opción no válida.");
             }
         } while (opcion != 7);
     }
 
+    // Módulo 2
     public static void registrarMedicamento() {
         System.out.println("\nREGISTRAR MEDICAMENTO");
 
