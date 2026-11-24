@@ -15,51 +15,25 @@ public class Tratamiento {
     }
 
     public void registrarTratamiento() {
-        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()
-                && fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-            System.out.println("Tratamiento registrado correctamente.");
-        }
+        System.out.println("Tratamiento registrado.");
     }
 
     public void modificarTratamiento(String nombreTratamiento, String fechaInicio, String fechaFin) {
-        if (nombreTratamiento != null && !nombreTratamiento.trim().isEmpty()) {
-            this.nombreTratamiento = nombreTratamiento;
-        }
-
-        if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-            this.fechaInicio = fechaInicio;
-        }
-
-        System.out.println("Tratamiento modificado correctamente.");
+        this.nombreTratamiento = nombreTratamiento;
+        this.fechaInicio = fechaInicio;
     }
 
     public void finalizarTratamiento() {
-        System.out.println("Tratamiento finalizado: " + nombreTratamiento);
+        System.out.println("Tratamiento finalizado.");
     }
 
     public void consultarTratamiento() {
         System.out.println("Nombre: " + nombreTratamiento);
         System.out.println("Fecha de inicio: " + fechaInicio);
-
-        System.out.println("Medicamentos:");
-
-        for (Medicamento medicamento : medicamentos) {
-            System.out.println("- " + medicamento.getNombreMedicamento());
-        }
-    }
-
-    public void agregarMedicamento(Medicamento medicamento) {
-        if (medicamento != null) {
-            medicamentos.add(medicamento);
-        }
     }
 
     public String getNombreTratamiento() {
         return nombreTratamiento;
-    }
-
-    public String getFechaInicio() {
-        return fechaInicio;
     }
 
     public ArrayList<Medicamento> getMedicamentos() {
